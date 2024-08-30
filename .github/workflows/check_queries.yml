@@ -1,0 +1,32 @@
+name: Validate Queries
+
+on:
+  pull_request:
+  push:
+    branches: [main, dev/ci_implementation]
+
+jobs:
+  validate-queries:
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install uv 
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      - name: create-virtualenv
+        run: uv python install 3.12 && uv venv -p 3.12 --seed
+      - name: activate-virtualenv
+        run: source .venv/bin/activate
+      - name: install-reqs
+        run: uv pip install -r requirements.txt
+      - name: generate-data
+        run: python generate_data.py
+      - name: validate-queries
+        run: python -m execute.q1
