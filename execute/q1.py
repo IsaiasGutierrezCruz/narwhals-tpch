@@ -24,4 +24,5 @@ print(q1.query(IO_FUNCS['pandas[pyarrow]'](lineitem)))
 print(q1.query(IO_FUNCS['polars[lazy]'](lineitem)).collect())
 print(q1.query(IO_FUNCS['pyarrow'](lineitem)))
 print(q1.query(IO_FUNCS['dask'](lineitem)).compute())
+raise ValueError("Stop here")
 
