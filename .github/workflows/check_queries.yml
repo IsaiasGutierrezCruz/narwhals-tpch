@@ -22,13 +22,15 @@ jobs:
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
       - name: create-virtualenv
         run: uv python install 3.12 && uv venv -p 3.12 --seed
-      - name: activate-virtualenv
+      - name: install-reqs
         run: |
           . .venv/bin/activate
-          echo "PATH=$PATH" >> "$GITHUB_ENV"
-      - name: install-reqs
-        run: uv pip install -r requirements.txt
+          uv pip install -r requirements.txt
       - name: generate-data
-        run: python generate_data.py
+        run: |
+          . .venv/bin/activate
+          python generate_data.py
       - name: validate-queries
-        run: python -m execute.q1
+        run: |
+          . .venv/bin/activate
+          python -m execute.q1
