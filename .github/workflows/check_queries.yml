@@ -23,7 +23,7 @@ jobs:
       - name: create-virtualenv
         run: uv python install 3.12 && uv venv -p 3.12 --seed
       - name: activate-virtualenv
-        run: source .venv/bin/activate
+        run: . .venv/bin/activate
       - name: install-reqs
         run: uv pip install -r requirements.txt
       - name: generate-data
