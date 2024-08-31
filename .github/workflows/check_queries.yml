@@ -33,4 +33,4 @@ jobs:
       - name: validate-queries
         run: |
           . .venv/bin/activate
-          python -m execute.q1
+          python -m unittest discover -s 'tests'
